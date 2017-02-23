@@ -20,7 +20,9 @@ int main(int argc, char* argv[]) {
 	//solve problem
 	cerr << "using algorithm " << algorithm << endl;
 	if(algorithm == "mock") {
+		cerr << "building table..." << endl;
 		buildtable(input);
+		cerr << "assigning servers..." << endl;
 		assignservers(input);
 	}
 	else {
