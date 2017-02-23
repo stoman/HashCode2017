@@ -57,8 +57,9 @@ void assignservers(Input& input) {
 			input.data_stored[server_id] += input.videosize[maxvideo];
 			input.servers[server_id].push_back(maxvideo);
 			cerr << "Adding video " << maxvideo << " to server " << server_id << endl;
+			update(input,maxvideo,server_id);
 		}
-		update(input,maxvideo,server_id);
+		cerr << "Part done:" << (double)k / (input.v*input.c) << endl;
 	
 		compute_max_saving(input,maxvideo,max_savings,id_max_savings);
 	}
