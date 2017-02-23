@@ -50,9 +50,10 @@ void assignservers(Input& input) {
 	long long total_volume = (long long)input.x*(long long)input.c;
 	
 	for (int j = 0; j < input.v; j++)
-		compute_max_saving(input,j,max_savings,id_max_savings,true);//,(4ll*current_volume >= total_volume));
+		compute_max_saving(input,j,max_savings,id_max_savings,(4ll*current_volume >= total_volume));
 	
 	int k;
+	bool done = false;
 	for (k = 0; k < input.v*input.c; k++)	{
 		//choose video with maximal savings
 		int maxvideo = 0;
@@ -78,18 +79,19 @@ void assignservers(Input& input) {
 			current_volume += input.videosize[maxvideo];
 		}
 		
-		/*
-		if (4ll*current_volume >= total_volume)
+		
+		if (4ll*current_volume >= total_volume && done == false)
 		{
+			done = true;
 			for (int i = 0; i < input.v; i++)
 				compute_max_saving(input,i,max_savings,id_max_savings,(4ll*current_volume >= total_volume));
-		}*/
+		}//*/
 		
     	if((double)k / (input.v*input.c) > lastpercent + 0.01) {
 		  cerr << "Part done:" << (double)k / (input.v*input.c) << endl;
       	lastpercent += 0.01;
 		}
 		
-		compute_max_saving(input,maxvideo,max_savings,id_max_savings,true);//,(4ll*current_volume >= total_volume));
+		compute_max_saving(input,maxvideo,max_savings,id_max_savings,(4ll*current_volume >= total_volume));
 	}
 }
