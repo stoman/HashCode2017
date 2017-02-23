@@ -1,5 +1,5 @@
 #include "util.cpp"
 
-void part2(Input& input) {
+void buildtable(Input& input) {
 	//TODO fill me
 }

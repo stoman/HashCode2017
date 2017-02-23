@@ -1,5 +1,5 @@
 #include "util.cpp"
 
-void part1(Input& input) {
+void assignservers(Input& input) {
 	//TODO fill me
 }

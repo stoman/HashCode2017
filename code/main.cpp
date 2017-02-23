@@ -20,8 +20,8 @@ int main(int argc, char* argv[]) {
 	//solve problem
 	cerr << "using algorithm " << algorithm << endl;
 	if(algorithm == "mock") {
-		part1(input);
-		part2(input);
+		buildtable(input);
+		assignservers(input);
 	}
 	else {
 		cerr << "unknown algorithm" << endl;
