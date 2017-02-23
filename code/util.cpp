@@ -59,7 +59,6 @@ void readInput(Input& input, istream& in) {
 
 void update(Input& input, int v, int c) 
 {
-
   // ids of end points affected
   vector<int> &ep_ids = input.requestsavings.at(c).at(v);
   for (int i : ep_ids)
@@ -75,10 +74,13 @@ void update(Input& input, int v, int c)
       int conServer = it->first;
       int otherLatDiff = ep.s - it->second;
 
+      // chosen server is faster than conServer
       if (otherLatDiff < usedLatDiff)
         input.savings[conServer][v] -= numRequests * otherLatDiff;
+      // other server is faster
       else
-        input.savings[conServer][v] -= numRequests * (otherLatDiff - usedLatDiff);
+        input.savings[conServer][v] -= numRequests * otherLatDiff;
+        input.savings[conServer][v] += numRequests * (otherLatDiff - usedLatDiff);
     }
   }
   input.savings.at(c).at(v) = 0;
