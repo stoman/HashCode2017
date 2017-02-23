@@ -7,6 +7,9 @@
 #include <set>
 #include <string>
 
+#include <sstream>
+#include <string>
+
 #include "../code/util.cpp"
 
 using namespace std;
@@ -19,12 +22,59 @@ int gradeFile(ifstream& in, ifstream& ans) {
   
   //read answer
   //TODO read answer
-  
+  map<int, vector<int>> res; // video to list of cache servers
+  for (int i = 0; i < input.v; i++) {
+    res[i] = vector<int>();
+  }
+
+  int n;
+  ans >> n;
+
+  string line;
+
+  for (int i = 0; i < n; i++) {
+    getline(ans, line);
+    istringstream iss(line);
+
+    int cid;
+    iss >> cid;
+
+    int vid;
+    iss >> vid;
+
+    while (!vid) {
+      res[vid].push_back(cid);
+
+      iss >> vid;
+    }
+  }
 
   //compute score
-  //TODO compute score
+  long long score = 0;
+  long long requests = 0;
+  for (Endpoint& e : input.endpoints) {
+    for (auto& t : e.requests) {
+      // t is one video e wants to see
+      long long saving = 0;
+      for (auto& cache : res[t.first]) {
+        // e is connected to cache
+        if (e.connections.find(cache) != e.connections.end()) {
+          long long newsave = (e.s - e.connections[cache]) * t.second;
+          requests += t.second;
+          if (newsave > saving) {
+            saving = newsave;
+          }
+        }
+      }
+      score += saving;
+    }
+  }
 
-  return -1;
+  score *= 1000;
+
+  long double s = score / (double) requests;
+
+  return s;
 }
 
 //iterate over all test cases
