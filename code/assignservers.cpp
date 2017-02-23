@@ -22,9 +22,9 @@ struct Input {
 void compute_max_saving(Input &input, int video_id, vector<double> &max_savings, vector<int> &id_max_savings)	{
 	for (int i = 0; i < input.c; i++)
 	{
-		if ( ((double)input.savings[i][video_id]) / ((double)input.videosize[video_id]) > max_savings[video_id] )
+		if ( ((double)input.savings[i][video_id])/* / ((double)input.videosize[video_id])*/ > max_savings[video_id] )
 		{
-			   max_savings[video_id] = ((double)input.savings[i][video_id]) / ((double)input.videosize[video_id]);
+			   max_savings[video_id] = ((double)input.savings[i][video_id]);// / ((double)input.videosize[video_id]);
 			id_max_savings[video_id] = i;
 		}
 	}
@@ -47,8 +47,8 @@ void assignservers(Input& input) {
 			
 		int server_id = id_max_savings[maxvideo];
 		
-		if (max_savings[maxvideo] < 1e-1)
-			break;
+		//if (max_savings[maxvideo] < 1e-1)
+		//	break;
 		
 		input.savings[server_id][maxvideo] = 0;
 		max_savings[maxvideo] = 0;
@@ -59,6 +59,8 @@ void assignservers(Input& input) {
 			input.servers[server_id].push_back(maxvideo);
 			//cerr << "Adding video " << maxvideo << " to server " << server_id << endl;
 			update(input,maxvideo,server_id);
+			
+			
 		}
     if((double)k / (input.v*input.c) > lastpercent + 0.01) {
 		  cerr << "Part done:" << (double)k / (input.v*input.c) << endl;
