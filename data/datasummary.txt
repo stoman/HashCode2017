@@ -1,3 +1,10 @@
+example
+    5 videos
+    2 endpoints
+    4 requests
+    3 cache servers
+    100 cache capacity
+
 kittens
     10000 videos
     1000 endpoints
