@@ -25,7 +25,7 @@ struct Input {
   vector<int> videosize;
   vector<vector<long long>> savings;//first int is cache server id, second int is video id
   vector<vector<vector<int>>> requestsavings;//first int is cache server id, second int is video id, contains list of endpoints
-  vector<vector<vector<int>>> requestlatency;//first int is cache server id, second int is video id, contains used latency
+  vector<vector<int>> requestlatency;//first int is endpoint id, second int is video id
   vector< vector<int> > servers; // for each server store all id-s of videos
   vector <int> data_stored; // for each server stored how much volume is already used
 };
@@ -60,13 +60,31 @@ void readInput(Input& input, istream& in) {
 
 void update(Input& input, int v, int c) 
 {
+  for(int e: input.requestsavings[c][v]) {
+    int requests = input.endpoints[e].requests[v];
+    for(pair<const int, int>& connection: input.endpoints[e].connections) {
+      int latencytoaddedcache = input.endpoints[e].connections[c];
+      int latencytoloopcache = input.endpoints[e].connections[connection.first];
+      int usedlatency = input.requestlatency[e][v];
+      if(latencytoaddedcache < usedlatency) {
+        //vorher requests*(usedlatency - latencytoloopcache)
+        //jetzt  requests*(latencytoaddedcache - latencytoloopcache)
+        input.savings[connection.first][v] -= requests * usedlatency; 
+        input.savings[connection.first][v] += requests * latencytoaddedcache; 
+      }
+    }
+    input.requestlatency[e][v] = min(input.requestlatency[e][v], input.endpoints[e].connections[c]);
+  }
+  input.savings.at(c).at(v) = 0;
+
   // ids of end points affected
+  /*
   vector<int> &ep_ids = input.requestsavings.at(c).at(v);
   for (int i : ep_ids)
   {
     Endpoint &ep = input.endpoints[i];
     int numRequests = ep.requests[v];
-    int usedLatDiff = ep.s - ep.connections[c];
+    int newLatDiff = input.requestlatency[i][v] - ep.connections[c];
 
     // iterate over all connected cache servers for given endpoint
     for (map<int,int>::iterator it = ep.connections.begin(); it != ep.connections.end(); it++)
@@ -86,7 +104,7 @@ void update(Input& input, int v, int c)
       }
     }
   }
-  input.savings.at(c).at(v) = 0;
+  input.savings.at(c).at(v) = 0;*/
 }
 
 #endif
