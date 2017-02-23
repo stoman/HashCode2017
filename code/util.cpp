@@ -5,6 +5,7 @@
 #include <iostream>
 #include <limits>
 #include <map>
+#include <math.h>
 #include <string>
 #include <time.h>
 #include <utility>
@@ -76,7 +77,6 @@ void update(Input& input, int v, int c)
         else {
           input.savings[connection.first][v] -= requests * (usedlatency - latencytoloopcache);
         }
-        input.savings[connection.first][v] = max(input.savings[connection.first][v], 0);
       }
     }
     input.requestlatency[e][v] = min(input.requestlatency[e][v], input.endpoints[e].connections[c]);
