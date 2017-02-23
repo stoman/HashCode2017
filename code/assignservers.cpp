@@ -33,6 +33,7 @@ void compute_max_saving(Input &input, int video_id, vector<double> &max_savings,
 void assignservers(Input& input) {
 	vector<double> max_savings(input.v, 0);
 	vector<int> id_max_savings(input.v, 0);
+  double lastpercent = 0.0;
 	
 	for (int j = 0; j < input.v; j++)
 		compute_max_saving(input,j,max_savings,id_max_savings);
@@ -56,10 +57,13 @@ void assignservers(Input& input) {
 		{
 			input.data_stored[server_id] += input.videosize[maxvideo];
 			input.servers[server_id].push_back(maxvideo);
-			cerr << "Adding video " << maxvideo << " to server " << server_id << endl;
+			//cerr << "Adding video " << maxvideo << " to server " << server_id << endl;
 			update(input,maxvideo,server_id);
 		}
-		cerr << "Part done:" << (double)k / (input.v*input.c) << endl;
+    if((double)k / (input.v*input.c) > lastpercent + 0.01) {
+		  cerr << "Part done:" << (double)k / (input.v*input.c) << endl;
+      lastpercent += 0.01;
+    }
 	
 		compute_max_saving(input,maxvideo,max_savings,id_max_savings);
 	}
