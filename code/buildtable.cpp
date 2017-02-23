@@ -12,7 +12,7 @@ void buildtable(Input& input) {
   }
   input.requestlatency.resize(input.c);
   for(int i = 0; i < input.c; i++) {
-    input.requestlatency[i].resize(input.v, -1);
+    input.requestlatency[i].resize(input.v);
   }
   //fill vectors
 	for(int e = 0; e < input.e; e++) {
