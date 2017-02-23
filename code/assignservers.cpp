@@ -50,7 +50,7 @@ void assignservers(Input& input) {
 	long long total_volume = (long long)input.x*(long long)input.c;
 	
 	for (int j = 0; j < input.v; j++)
-		compute_max_saving(input,j,max_savings,id_max_savings,(4ll*current_volume >= total_volume));
+		compute_max_saving(input,j,max_savings,id_max_savings,true);//(4ll*current_volume >= total_volume));
 	
 	int k;
 	bool done = false;
@@ -80,7 +80,7 @@ void assignservers(Input& input) {
 		}
 		
 		
-		if (4ll*current_volume >= total_volume && done == false)
+		/*if (4ll*current_volume >= total_volume && done == false)
 		{
 			done = true;
 			for (int i = 0; i < input.v; i++)
@@ -92,6 +92,6 @@ void assignservers(Input& input) {
       	lastpercent += 0.01;
 		}
 		
-		compute_max_saving(input,maxvideo,max_savings,id_max_savings,(4ll*current_volume >= total_volume));
+		compute_max_saving(input,maxvideo,max_savings,id_max_savings,true);//(4ll*current_volume >= total_volume));
 	}
 }
