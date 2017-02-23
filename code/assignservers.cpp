@@ -46,6 +46,9 @@ void assignservers(Input& input) {
 			
 		int server_id = id_max_savings[maxvideo];
 		
+		if (max_savings[maxvideo] < 1e-1)
+			break;
+		
 		input.savings[server_id][maxvideo] = 0;
 		max_savings[maxvideo] = 0;
 		
@@ -53,6 +56,7 @@ void assignservers(Input& input) {
 		{
 			input.data_stored[server_id] += input.videosize[maxvideo];
 			input.servers[server_id].push_back(maxvideo);
+			cerr << "Adding video " << maxvideo << " to server " << server_id << endl;
 		}
 		update(input,maxvideo,server_id);
 	
