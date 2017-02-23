@@ -29,5 +29,12 @@ int main(int argc, char* argv[]) {
 	}
 	
 	//print output
-	//TODO print output
+	cout << input.c << endl;
+	for(int i = 0; i < input.c; i++) {
+		cout << i;
+		for(int v: input.servers[i]) {
+			cout << " " << v;
+		}
+		cout << endl;
+	}
 };
