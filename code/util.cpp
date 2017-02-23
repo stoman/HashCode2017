@@ -23,6 +23,8 @@ struct Input {
   int v, e, r, c, x;
   vector<Endpoint> endpoints;
   vector<int> videosize;
+  vector<vector<long long>> savings;//first int is cache server id, second int is video id
+  vector<vector<vector<int>>> requestsavings;//first int is cache server id, second int is video id, contains list of endpoints
 };
 
 //input handling
@@ -47,6 +49,10 @@ void readInput(Input& input, istream& in) {
     in >> v >> e >> n;
     input.endpoints[e].requests[v] += n;
   }
+}
+
+void update(Input& input, int v, int c) {
+  //fill me
 }
 
 #endif
