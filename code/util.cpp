@@ -27,8 +27,8 @@ struct Input {
   vector<vector<long long>> savings;//first int is cache server id, second int is video id
   vector<vector<vector<int>>> requestsavings;//first int is cache server id, second int is video id, contains list of endpoints
   vector<vector<int>> requestlatency;//first int is endpoint id, second int is video id
-  vector< vector<int> > servers; // for each server store all id-s of videos
-  vector <int> data_stored; // for each server stored how much volume is already used
+  vector<vector<int>> servers; // for each server store all id-s of videos
+  vector<int> data_stored; // for each server stored how much volume is already used
 };
 
 //input handling

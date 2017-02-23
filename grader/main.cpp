@@ -15,23 +15,19 @@
 using namespace std;
 
 //grade one single test case
-int gradeFile(ifstream& in, ifstream& ans) {
+long long gradeFile(ifstream& in, ifstream& ans) {
   //read input
   Input input;
   readInput(input, in);
   
   //read answer
-  //TODO read answer
   map<int, vector<int>> res; // video to list of cache servers
-  for (int i = 0; i < input.v; i++) {
-    res[i] = vector<int>();
-  }
 
   int n;
   ans >> n;
 
   string line;
-
+  getline(ans, line);
   for (int i = 0; i < n; i++) {
     getline(ans, line);
     istringstream iss(line);
@@ -40,12 +36,8 @@ int gradeFile(ifstream& in, ifstream& ans) {
     iss >> cid;
 
     int vid;
-    iss >> vid;
-
-    while (!vid) {
+    while (iss >> vid) {
       res[vid].push_back(cid);
-
-      iss >> vid;
     }
   }
 
@@ -54,13 +46,13 @@ int gradeFile(ifstream& in, ifstream& ans) {
   long long requests = 0;
   for (Endpoint& e : input.endpoints) {
     for (auto& t : e.requests) {
+      requests += t.second;
       // t is one video e wants to see
       long long saving = 0;
       for (auto& cache : res[t.first]) {
         // e is connected to cache
         if (e.connections.find(cache) != e.connections.end()) {
           long long newsave = (e.s - e.connections[cache]) * t.second;
-          requests += t.second;
           if (newsave > saving) {
             saving = newsave;
           }
@@ -70,11 +62,7 @@ int gradeFile(ifstream& in, ifstream& ans) {
     }
   }
 
-  score *= 1000;
-
-  long double s = score / (double) requests;
-
-  return s;
+  return 1000 * score / requests;
 }
 
 //iterate over all test cases
