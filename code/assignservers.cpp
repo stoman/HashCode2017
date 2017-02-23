@@ -63,7 +63,7 @@ void assignservers(Input& input) {
 			
 		int server_id = id_max_savings[maxvideo];
 		
-		if (max_savings[maxvideo] < 0.0)
+		if (max_savings[maxvideo] < 0.00001)
 			break;
 		
 		input.savings[server_id][maxvideo] = 0;
