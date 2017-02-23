@@ -25,6 +25,7 @@ struct Input {
   vector<int> videosize;
   vector<vector<long long>> savings;//first int is cache server id, second int is video id
   vector<vector<vector<int>>> requestsavings;//first int is cache server id, second int is video id, contains list of endpoints
+  vector<vector<vector<int>>> requestlatency;//first int is cache server id, second int is video id, contains used latency
   vector< vector<int> > servers; // for each server store all id-s of videos
   vector <int> data_stored; // for each server stored how much volume is already used
 };
@@ -75,12 +76,14 @@ void update(Input& input, int v, int c)
       int otherLatDiff = ep.s - it->second;
 
       // chosen server is faster than conServer
-      if (otherLatDiff < usedLatDiff)
+      if (otherLatDiff < usedLatDiff) {
         input.savings[conServer][v] -= numRequests * otherLatDiff;
+      }
       // other server is faster
-      else
+      else {
         input.savings[conServer][v] -= numRequests * otherLatDiff;
         input.savings[conServer][v] += numRequests * (otherLatDiff - usedLatDiff);
+      }
     }
   }
   input.savings.at(c).at(v) = 0;

@@ -10,6 +10,10 @@ void buildtable(Input& input) {
   for(int i = 0; i < input.c; i++) {
     input.requestsavings[i].resize(input.v);
   }
+  input.requestlatency.resize(input.c);
+  for(int i = 0; i < input.c; i++) {
+    input.requestlatency[i].resize(input.v, -1);
+  }
   //fill vectors
 	for(int e = 0; e < input.e; e++) {
     for(pair<const int, int>& request: input.endpoints[e].requests) {
