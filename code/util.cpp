@@ -66,19 +66,19 @@ void update(Input& input, int v, int c)
   {
     Endpoint &ep = input.endpoints[i];
     int numRequests = ep.requests[v];
-    int usedLat = ep.connections[c];
+    int usedLatDiff = ep.s - ep.connections[c];
 
     // iterate over all connected cache servers for given endpoint
     for (map<int,int>::iterator it = ep.connections.begin(); it != ep.connections.end(); it++)
     {
 
       int conServer = it->first;
-      int otherLat = it->second;
+      int otherLatDiff = ep.s - it->second;
 
-      if (otherLat > usedLat)
-        input.savings[conServer][v] -= numRequests * otherLat;
+      if (otherLatDiff < usedLatDiff)
+        input.savings[conServer][v] -= numRequests * otherLatDiff;
       else
-        input.savings[conServer][v] -= numRequests * (usedLat - otherLat);
+        input.savings[conServer][v] -= numRequests * (otherLatDiff - usedLatDiff);
     }
   }
   input.savings.at(c).at(v) = 0;
