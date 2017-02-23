@@ -12,12 +12,18 @@ kittens
     500 cache servers
     6000 cache capacity
 
-me at te zoo
+    k - linear from 200 to 500
+    vsize - linear 1 to 1000
+
+me at the zoo
     100 videos
     10 endpoints
     100 requests
     10 cache servers
     100 cache capacity
+
+    k - linear 1 to 5
+    vsize - linear 1 to 50
 
 trending
     10000 videos
@@ -25,6 +31,9 @@ trending
     10000 requests
     100 cache servers
     50000 cache capacity
+
+    k - always 100
+    vsize - exponential growth 100 to 1000
     
 videos spreading
     10000 videos
@@ -32,3 +41,9 @@ videos spreading
     100000 requests
     100 cache servers
     10000 cache capacity
+
+    k - linear 0 to 10
+    vsize - linear 1 to 600
+
+
+request / endpoint?
