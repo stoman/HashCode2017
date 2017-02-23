@@ -65,18 +65,13 @@ void update(Input& input, int v, int c)
     int requests = input.endpoints[e].requests[v];
     for(pair<const int, int>& connection: input.endpoints[e].connections) {
       int latencytoaddedcache = input.endpoints[e].connections[c];
-      int latencytoloopcache = connection.second;
+      int latencytoloopcache = input.endpoints[e].connections[connection.first];
       int usedlatency = input.requestlatency[e][v];
       if(latencytoaddedcache < usedlatency) {
         //vorher requests*(usedlatency - latencytoloopcache)
         //jetzt  requests*(latencytoaddedcache - latencytoloopcache)
-        if(latencytoloopcache < latencytoaddedcache) {
-          input.savings[connection.first][v] -= requests * usedlatency; 
-          input.savings[connection.first][v] += requests * latencytoaddedcache;
-        }
-        else {
-          input.savings[connection.first][v] -= requests * (usedlatency - latencytoloopcache);
-        }
+        input.savings[connection.first][v] -= requests * usedlatency; 
+        input.savings[connection.first][v] += requests * latencytoaddedcache; 
       }
     }
     input.requestlatency[e][v] = min(input.requestlatency[e][v], input.endpoints[e].connections[c]);
