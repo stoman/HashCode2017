@@ -25,6 +25,8 @@ struct Input {
   vector<int> videosize;
   vector<vector<long long>> savings;//first int is cache server id, second int is video id
   vector<vector<vector<int>>> requestsavings;//first int is cache server id, second int is video id, contains list of endpoints
+  vector< vector<int> > servers; // for each server store all id-s of videos
+  vector <int> data_stored; // for each server stored how much volume is already used
 };
 
 //input handling
@@ -32,6 +34,10 @@ void readInput(Input& input, istream& in) {
 	in >> input.v >> input.e >> input.r >> input.c >> input.x;
   input.endpoints.resize(input.e);
   input.videosize.resize(input.v);
+  
+  input.servers.resize(input.c);
+  input.data_stored.resize(input.c);
+  
   for(int i = 0; i < input.v; i++) {
     in >> input.videosize[i];
   }
