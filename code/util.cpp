@@ -51,8 +51,31 @@ void readInput(Input& input, istream& in) {
   }
 }
 
-void update(Input& input, int v, int c) {
-  //fill me
+void update(Input& input, int v, int c) 
+{
+
+  // ids of end points affected
+  vector<int> &ep_ids = input.requestsavings.at(c).at(v);
+  for (int i : ep_ids)
+  {
+    Endpoint &ep = input.endpoints[i];
+    int numRequests = ep.requests[v];
+    int usedLat = ep.connections[c];
+
+    // iterate over all connected cache servers for given endpoint
+    for (map<int,int>::iterator it = ep.connections.begin(); it != ep.connections.end(); it++)
+    {
+
+      int conServer = it->first;
+      int otherLat = it->second;
+
+      if (otherLat > usedLat)
+        input.savings[conServer][v] -= numRequests * otherLat;
+      else
+        input.savings[conServer][v] -= numRequests * (usedLat - otherLat);
+    }
+  }
+  input.savings.at(c).at(v) = 0;
 }
 
 #endif
